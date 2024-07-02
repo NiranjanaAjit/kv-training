@@ -1,0 +1,24 @@
+{
+  "name": "training",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "node build/app.js",
+    "introduction": "echo 'Hello KeyValue! Niranjana here !!'",
+    "build":"rm -fr build/ && tsc",
+    "start": "npm run build && npm run introduction  && npm run start-server "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2",
+    "typescript": "^5.5.3"
+  }, 
+  "devDependencies": {
+    "@types/node": "20.14.9",
+    "@types/express": "4.17.21"
+  }
+}

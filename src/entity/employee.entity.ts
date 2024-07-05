@@ -6,6 +6,7 @@ import {
 
 import AbstractEntity from "./abstract-entity";
 import Address from "./address.entity";
+import { Role } from "../utils/role.enum";
 
 @Entity()
 export default class Employee extends AbstractEntity{
@@ -25,6 +26,10 @@ export default class Employee extends AbstractEntity{
   })
   address: Address;
 
+  @Column({nullable: true})
+  password: string;
 
+  @Column({nullable: true})
+  role: Role;
 
 }

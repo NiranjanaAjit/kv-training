@@ -7,6 +7,7 @@ import dataSource from "./db/data-source.db";
 import HttpException from "./exceptions/http.exceptions";
 import errorMiddleware from "./middleware/error.middleware";
 
+
 const server = express();
 server.use(bodyParser.json());
 server.use(loggerMiddleware);

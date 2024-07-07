@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start-server": "node ./build/src/src/app.js",
+    "start-server": "node ./build/src/app.js",
     "introduction": "echo 'Hello KeyValue! Niranjana here !!'",
     "build": "rm -fr build && tsc",
     "test": "jest",

@@ -113,7 +113,7 @@
     "esModuleInterop": true,
     "target": "es6",
     "sourceMap": true,
-    "outDir": "build/src",
+    "outDir": "build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
   }

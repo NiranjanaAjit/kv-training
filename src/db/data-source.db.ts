@@ -17,8 +17,8 @@ const AppDataSource = new DataSource({
   synchronize: false,
   logging: true,
   namingStrategy: new SnakeNamingStrategy(),
-  entities: ["build/src/src/entity/*.js"],
-  migrations: ["build/src/src/db/migrations/*.js"],
+  entities: ["build/src/entity/*.js"],
+  migrations: ["build/src/db/migrations/*.js"],
 });
 
 export default AppDataSource;

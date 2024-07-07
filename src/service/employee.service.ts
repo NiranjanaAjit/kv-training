@@ -7,6 +7,7 @@ import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { jwtPayload } from "../utils/jwtPayload.types";
 import { JWT_SECRET, JWT_VALIDITY } from "../utils/constants";
+import Department from "../entity/department.entity";
 class EmployeeService {
   constructor(private employeeRepository: EmployeeRepository) {}
 
@@ -35,6 +36,9 @@ class EmployeeService {
       ? await bcrypt.hash(employeeDto.password, 10)
       : "";
     newEmployee.role = employeeDto.role;
+    const dept = new Department;
+    dept.departmentName = employeeDto.department.departmentName;
+    newEmployee.department = dept;
     console.log(newEmployee);
     return this.employeeRepository.save(newEmployee);
   };
@@ -44,7 +48,8 @@ class EmployeeService {
     email: string,
     name: string,
     age: number,
-    address: any
+    address: any,
+    department: any
   ): Promise<Employee> => {
     let employee = await this.employeeRepository.findOneBy({ id });
     if (employee == null) {
@@ -55,6 +60,7 @@ class EmployeeService {
     employee.age = age;
     employee.address.line1 = address.line1;
     employee.address.pincode = address.pincode;
+    employee.department.departmentName = department.departmentName;
     return this.employeeRepository.save(employee);
   };
 

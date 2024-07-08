@@ -11,9 +11,14 @@ const errorMiddleware = (
         if (error instanceof HttpException) {
             const errorName: string = error.error; 
             const status: number = error.status || 500;
-            const message: JSON = JSON.parse(error.message )[0]|| {error: "Something went wrong"};
-            const errorArray = Object.values(message["constraints"]);
+            // const message: JSON = JSON.parse(error.message )[0]|| {error: "Something went wrong"};
+            // const errorArray = Object.values(message["constraints"]);
+
+            // let respbody = { error: errorName, statusCode: status, errors: error.message };
+
             let respbody = { error: errorName, statusCode: status, errors: error.message };
+
+            
             res.status(status).json(respbody);
         } else {
             console.error(error.stack);

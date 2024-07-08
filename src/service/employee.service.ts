@@ -8,6 +8,10 @@ import jsonwebtoken from "jsonwebtoken";
 import { jwtPayload } from "../utils/jwtPayload.types";
 import { JWT_SECRET, JWT_VALIDITY } from "../utils/constants";
 import Department from "../entity/department.entity";
+import DepartmentController from "../controller/department.controller";
+import DepartmentService from "./department.service";
+import DepartmentRepository from "../repository/department.repository";
+import AppDataSource from "../db/data-source.db";
 class EmployeeService {
   constructor(private employeeRepository: EmployeeRepository) {}
 
@@ -36,11 +40,27 @@ class EmployeeService {
       ? await bcrypt.hash(employeeDto.password, 10)
       : "";
     newEmployee.role = employeeDto.role;
-    const dept = new Department;
-    dept.departmentName = employeeDto.department.departmentName;
-    newEmployee.department = dept;
-    console.log(newEmployee);
-    return this.employeeRepository.save(newEmployee);
+
+    //instead of creating a new department, check if department already exists
+    const departmentService = new DepartmentService(
+      new DepartmentRepository(AppDataSource.getRepository(Department))
+    );
+    let department = await departmentService.getDepartmentByName(
+      employeeDto.department.departmentName
+    );
+    console.log("dept", department);
+    if (department) {
+      newEmployee.department = department;
+    } else {
+      const newDepartment = new Department();
+      newDepartment.departmentName = employeeDto.department.departmentName;
+      newEmployee.department = newDepartment;
+    }
+
+    // console.log(newEmployee);
+    const response = await this.employeeRepository.save(newEmployee);
+    console.log(response);
+    return response;
   };
 
   updateEmployee = async (
@@ -66,6 +86,7 @@ class EmployeeService {
 
   deleteEmployee = async (id: number): Promise<void> => {
     let employee = await this.employeeRepository.findOneBy({ id });
+
     await this.employeeRepository.remove(employee);
   };
 
@@ -85,7 +106,9 @@ class EmployeeService {
       role: employee.role,
     };
 
-    const token = jsonwebtoken.sign(payload, JWT_SECRET, { expiresIn: JWT_VALIDITY });
+    const token = jsonwebtoken.sign(payload, JWT_SECRET, {
+      expiresIn: JWT_VALIDITY,
+    });
     return { token };
   };
 }

@@ -25,12 +25,11 @@ class EmployeeRepository {
     return this.repository.save(employee);
   }
 
-//   async update(filter: number, employee: Employee): Promise<Employee> {
-//     const this.repository = this.repository.getRepository(Employee);
-//     let oldEmployee = await this.repository.findOneBy({ id: filter });
-//     oldEmployee = employee;
-//     return this.repository.save(oldEmployee);
-//   }
+  async update(filter: number, employee: Employee): Promise<Employee> {
+    let oldEmployee = await this.repository.findOneBy({ id: filter });
+    oldEmployee = employee;
+    return this.repository.save(oldEmployee);
+  }
 
   remove = async (employee: Employee): Promise<void> => {
     await this.repository.softRemove(employee);

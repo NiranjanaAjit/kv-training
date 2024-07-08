@@ -2,6 +2,7 @@ import { when } from "jest-when";
 import Department from "../../src/entity/department.entity";
 import DepartmentRepository from "../../src/repository/department.repository";
 import DepartmentService from "../../src/service/department.service";
+import { DepartmentDto } from "../../src/dto/department.dto";
 
 describe('Department Service', () => {
     let departmentRepository:DepartmentRepository;
@@ -35,4 +36,15 @@ describe('Department Service', () => {
         expect(department.departmentName).toEqual("sample");
         expect(mock).toHaveBeenCalledTimes(1);
     })
+
+    // it('should create a department', async() => {
+    //     const mock = jest.fn(departmentRepository.save).mockRejectedValue([]);
+    //     departmentRepository.save = mock;
+
+    //     const departments = await departmentService.createDepartment({departmentDto: DepartmentDto});
+
+    //     expect(departments).toEqual([]);
+    //     expect(mock).toHaveBeenCalledTimes(1);
+
+    // })
 })

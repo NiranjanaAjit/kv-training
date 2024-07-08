@@ -16,7 +16,8 @@ export default class DepartmentController {
     this.router.get("/", this.getAllDepartments);
     this.router.get("/:departmentId", this.getDepartmentById);
     this.router.post("/",authorize,this.createDepartment);
-    this.router.delete("/:departmentId", this.deleteDepartment);
+    this.router.put("/:departmentId",authorize, this.updateDepartment);
+    this.router.delete("/:departmentId", authorize, this.deleteDepartment);
   }
 
   public getAllDepartments = async (
@@ -63,6 +64,8 @@ export default class DepartmentController {
     }
   };
 
+
+
   public createDepartment = async (
     request: RequestWithUser,
     response: Response,
@@ -93,38 +96,38 @@ export default class DepartmentController {
   };
 
 
-  //figure out on storing by employee id
-//   public updateEmployee = async (
-//     request: Request,
-//     response: Response,
-//     next: NextFunction
-//   ) => {
-//     try {
-//       const employeeDto = plainToInstance(CreateEmployeeDto, request.body);
-//       const errors = await validate(employeeDto);
-//       if (errors.length != 0) {
-//         const error = new HttpException(
-//           404,
-//           "Validation failed",
-//           JSON.stringify(errors)
-//         );
-//         throw error;
-//       }
-
-//       const employee = await this.employeeService.updateEmployee(
-//         Number(request.params.employeeId),
-//         employeeDto.email,
-//         employeeDto.name,
-//         employeeDto.age,
-//         employeeDto.address,
-//         employeeDto.department
-//       );
-//       response.status(201).send(employee);
-//     } catch (err) {
-//       console.log("put or update failed");
-//       next(err);
-//     }
-//   };
+  public updateDepartment = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    try {
+      console.log("updating department")
+      const role = request.role;
+      if(role!=Role.HR){
+          throw new HttpException(403,"YOU DO NOT HAVE ACCES","NO ACCESS");
+      }
+      const departmentDto = plainToInstance(DepartmentDto, request.body);
+      const errors = await validate(departmentDto);
+      if (errors.length != 0) {
+        const error = new HttpException(
+          404,
+          "Validation failed",
+          JSON.stringify(errors)
+        );
+        throw error;
+      }
+      
+      const department = await this.departmentService.updateDepartment(
+        Number(request.params.departmentId),
+        departmentDto.departmentName,
+      );
+      response.status(201).send(department);
+    } catch (err) {
+      console.log("put or update failed");
+      next(err);
+    }
+  };
 
   public deleteDepartment = async (
     request: RequestWithUser,
@@ -132,6 +135,10 @@ export default class DepartmentController {
     next: NextFunction
   ) => {
     try {
+      const role = request.role;
+      if(role!=Role.HR){
+          throw new HttpException(403,"YOU DO NOT HAVE ACCES","NO ACCESS");
+      }
       const department = await this.departmentService.getDepartmentById(
         Number(request.params.departmentId)
       );
@@ -144,7 +151,7 @@ export default class DepartmentController {
         throw error;
       };
       if(department.employees.length != 0){
-        console.log(`employeees ${department.employees}, lenght ${department.employees.length}`);
+        console.log(`employeees ${department.employees}, length ${department.employees.length}`);
         throw new HttpException(
             200,
             "department not empty",
@@ -161,6 +168,29 @@ export default class DepartmentController {
         );
         response.status(200).send(result);
       }
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public getDepartmentByName = async (
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const department = await this.departmentService.getDepartmentByName(
+        request.body.department.departmentName
+      );
+      if (!department) {
+        const error = new HttpException(
+          404,
+          "missing department",
+          `no department of ${request.body.department.departmentName} name!`
+        );
+        throw error;
+      }
+      response.status(200).send(department);
     } catch (err) {
       next(err);
     }

@@ -13,7 +13,7 @@ const server = express();
 server.use(bodyParser.json());
 server.use(loggerMiddleware);
 server.use("/employees", employeeRouter);
-server.use("/department",departmentRouter);
+server.use("/departments",departmentRouter);
 server.use(errorMiddleware);
 
 server.get("/", (request: Request, response: Response) => {

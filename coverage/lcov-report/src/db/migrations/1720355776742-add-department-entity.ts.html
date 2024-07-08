@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/db/migrations/1720084324368-add-age-to-employee.ts</title>
+    <title>Code coverage report for src/db/migrations/1720355776742-add-department-entity.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/db/migrations</a> 1720084324368-add-age-to-employee.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/db/migrations</a> 1720355776742-add-department-entity.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -77,31 +77,43 @@
 <a name='L12'></a><a href='#L12'>12</a>
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { MigrationInterface, QueryRunner } from "typeorm";
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export class A</span></span>ddAgeToEmployee1720084324368 implements MigrationInterface {
-<span class="cstat-no" title="statement not covered" >    name = 'AddAgeToEmployee1720084324368'</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export class A</span></span>ddDepartmentEntity1720355776742 implements MigrationInterface {
+<span class="cstat-no" title="statement not covered" >    name = 'AddDepartmentEntity1720355776742'</span>
 &nbsp;
     public async <span class="fstat-no" title="function not covered" >up(</span>queryRunner: QueryRunner): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`ALTER TABLE "employee" ADD "age" integer NOT NULL`);</span>
+<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`CREATE TABLE "department" ("id" SERIAL NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "department_name" character varying NOT NULL, CONSTRAINT "PK_9a2213262c1593bffb581e382f5" PRIMARY KEY ("id"))`);</span>
+<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`ALTER TABLE "employee" ADD "department_id" integer`);</span>
+<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`ALTER TABLE "employee" ADD CONSTRAINT "FK_d62835db8c0aec1d18a5a927549" FOREIGN KEY ("department_id") REFERENCES "department"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);</span>
     }
 &nbsp;
     public async <span class="fstat-no" title="function not covered" >down(</span>queryRunner: QueryRunner): Promise&lt;void&gt; {
-<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`ALTER TABLE "employee" DROP COLUMN "age"`);</span>
+<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`ALTER TABLE "employee" DROP CONSTRAINT "FK_d62835db8c0aec1d18a5a927549"`);</span>
+<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`ALTER TABLE "employee" DROP COLUMN "department_id"`);</span>
+<span class="cstat-no" title="statement not covered" >        await queryRunner.query(`DROP TABLE "department"`);</span>
     }
 &nbsp;
 }

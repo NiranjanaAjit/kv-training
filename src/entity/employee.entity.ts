@@ -35,8 +35,7 @@ export default class Employee extends AbstractEntity{
   role: Role;
 
   @ManyToOne(() => Department, (department) => department.employees, {
-    cascade: true,
-    onDelete:"CASCADE"
+    cascade: ["insert","update"]
   })
   department: Department;
 

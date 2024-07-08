@@ -21,8 +21,8 @@ class EmployeeController {
     this.router.get("/", this.getAllEmployees);
     this.router.get("/:employeeId", this.getEmployeeById);
     this.router.post("/", authorize, this.createEmployee);
-    this.router.put("/:employeeId", this.updateEmployee);
-    this.router.delete("/:employeeId", this.deleteEmployee);
+    this.router.put("/:employeeId", authorize, this.updateEmployee);
+    this.router.delete("/:employeeId", authorize, this.deleteEmployee);
     this.router.post("/login", this.loginEmployee);
   }
 
@@ -76,10 +76,10 @@ class EmployeeController {
     next: NextFunction
   ) => {
     try {
-        const role = request.role;
-        if(role!=Role.HR){
-            throw new HttpException(403,"YOU DO NOT HAVE ACCES","NO ACCESS");
-        }
+      const role = request.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "YOU DO NOT HAVE ACCES", "NO ACCESS");
+      }
       const employeeDto = plainToInstance(CreateEmployeeDto, request.body);
       const errors = await validate(employeeDto);
       console.log(typeof errors, errors);
@@ -92,6 +92,7 @@ class EmployeeController {
         throw error;
       } else {
         const employee = await this.employeeService.createEmployee(employeeDto);
+        // delete employee.department.employees;
         response.status(201).send(employee);
       }
     } catch (err) {
@@ -100,11 +101,15 @@ class EmployeeController {
   };
 
   public updateEmployee = async (
-    request: Request,
+    request: RequestWithUser,
     response: Response,
     next: NextFunction
   ) => {
     try {
+      const role = request.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "YOU DO NOT HAVE ACCES", "NO ACCESS");
+      }
       const employeeDto = plainToInstance(CreateEmployeeDto, request.body);
       const errors = await validate(employeeDto);
       if (errors.length != 0) {
@@ -132,11 +137,15 @@ class EmployeeController {
   };
 
   public deleteEmployee = async (
-    request: Request,
+    request: RequestWithUser,
     response: Response,
     next: NextFunction
   ) => {
     try {
+      const role = request.role;
+      if (role != Role.HR) {
+        throw new HttpException(403, "YOU DO NOT HAVE ACCES", "NO ACCESS");
+      }
       const employee = await this.employeeService.getEmployeeById(
         Number(request.params.employeeId)
       );

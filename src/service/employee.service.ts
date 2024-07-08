@@ -52,9 +52,7 @@ class EmployeeService {
     if (department) {
       newEmployee.department = department;
     } else {
-      const newDepartment = new Department();
-      newDepartment.departmentName = employeeDto.department.departmentName;
-      newEmployee.department = newDepartment;
+      throw new HttpException(404,"department not found","check department or add new department")
     }
 
     // console.log(newEmployee);
@@ -80,6 +78,7 @@ class EmployeeService {
     employee.age = age;
     employee.address.line1 = address.line1;
     employee.address.pincode = address.pincode;
+    
     employee.department.departmentName = department.departmentName;
     return this.employeeRepository.save(employee);
   };

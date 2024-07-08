@@ -4,16 +4,23 @@ import Employee from "../../src/entity/employee.entity";
 import EmployeeController from "../../src/controller/employee.controller";
 import EmployeeService from "../../src/service/employee.service";
 import { when } from "jest-when";
+import Department from "../../src/entity/department.entity";
+import DepartmentService from "../../src/service/department.service";
+import DepartmentRepository from "../../src/repository/department.repository";
 
 describe('Employee Service', () => {
     let employeeRepository:EmployeeRepository;
     let employeeService: EmployeeService;
+    let departmentService: DepartmentService;
+    let departmentRepository: DepartmentRepository;
     beforeAll( () => {
         const dataSource = {
             getRepository: jest.fn()
         };
         employeeRepository = new EmployeeRepository(dataSource.getRepository(Employee)) as jest.Mocked<EmployeeRepository>;
-        employeeService = new EmployeeService(employeeRepository);
+        departmentRepository = new DepartmentRepository(dataSource.getRepository(Department)) as jest.Mocked<DepartmentRepository>;
+        employeeService = new EmployeeService(employeeRepository, departmentRepository);
+        // departmentRepository = new DepartmentRepository(dataSource.ge)
     })
 
     it('should return all employees',async () => {

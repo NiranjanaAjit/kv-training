@@ -2,7 +2,8 @@ import {
   Entity,
   Column,
   OneToOne,
-  ManyToOne
+  ManyToOne,
+  Unique
 } from "typeorm";
 
 import AbstractEntity from "./abstract-entity";
@@ -16,7 +17,7 @@ export default class Employee extends AbstractEntity{
   @Column()
   name: string;
 
-  @Column()
+  @Column({unique: true})  
   email: string;
 
   @Column()

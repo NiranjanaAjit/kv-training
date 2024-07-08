@@ -13,7 +13,7 @@ import DepartmentService from "./department.service";
 import DepartmentRepository from "../repository/department.repository";
 import AppDataSource from "../db/data-source.db";
 class EmployeeService {
-  constructor(private employeeRepository: EmployeeRepository) {}
+  constructor(private employeeRepository: EmployeeRepository, private departmentRepository: DepartmentRepository) {}
 
   getAllEmployees = async (): Promise<Employee[]> => {
     // console.log(this.employeeRepository.find());
@@ -40,13 +40,15 @@ class EmployeeService {
       ? await bcrypt.hash(employeeDto.password, 10)
       : "";
     newEmployee.role = employeeDto.role;
-
+    const tempDept : string = employeeDto.department.departmentName;
     //instead of creating a new department, check if department already exists
-    const departmentService = new DepartmentService(
-      new DepartmentRepository(AppDataSource.getRepository(Department))
-    );
-    let department = await departmentService.getDepartmentByName(
-      employeeDto.department.departmentName
+    // const departmentService = new DepartmentService(
+    //   new DepartmentRepository(AppDataSource.getRepository(Department))
+    // );
+    let department = await this.departmentRepository.findOneBy({
+      departmentName:tempDept
+      // employeeDto.department.departmentName
+    }
     );
     console.log("dept", department);
     if (department) {
@@ -89,8 +91,8 @@ class EmployeeService {
     await this.employeeRepository.remove(employee);
   };
 
-  loginEmployee = async (id: number, password: string) => {
-    let employee = await this.employeeRepository.findOneBy({ id });
+  loginEmployee = async (email: string, password: string) => {
+    let employee = await this.employeeRepository.findOneBy({ email });
     if (!employee) {
       throw new HttpException(404, "user not found", "login failed");
     }

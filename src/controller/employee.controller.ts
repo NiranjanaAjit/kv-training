@@ -33,7 +33,7 @@ class EmployeeController {
   ) => {
     try {
       const employees = await this.employeeService.getAllEmployees();
-      if (!employees) {
+      if (employees.length == 0) {
         const error = new HttpException(
           404,
           "missing employee",
@@ -173,9 +173,9 @@ class EmployeeController {
     next: NextFunction
   ) => {
     try {
-      const { id, password } = request.body;
+      const { email, password } = request.body;
 
-      const token = await this.employeeService.loginEmployee(id, password);
+      const token = await this.employeeService.loginEmployee(email, password);
       console.log(token);
       response.status(200).send({ data: token });
     } catch (err) {

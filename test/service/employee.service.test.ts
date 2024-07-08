@@ -38,9 +38,23 @@ describe('Employee Service', () => {
         expect(mock).toHaveBeenCalledTimes(1);
     })
 
-    // it('should return token on login', async () => {
-    //     const mock =  jest.fn(employeeRepository.find)
-    // })
+    it('should delete an employee', async() => {
+
+        const mock2 = jest.fn();
+        when(mock2).calledWith({id: 2})
+        .mockResolvedValue({id: 2,"name": "sample"} as Employee );
+        employeeRepository.findOneBy = mock2;
+        const mock = jest.fn();
+        when(mock).calledWith({id:2,"name": "sample"})
+        .mockResolvedValue([]);
+        employeeRepository.remove = mock;
+
+        const result = await employeeService.deleteEmployee(2) ;
+
+        expect(result).toEqual(undefined);
+        expect(mock).toHaveBeenCalledTimes(1);
+
+    })
 
 
 })

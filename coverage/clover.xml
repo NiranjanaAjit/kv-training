@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1720433107353" clover="3.2.0">
-  <project timestamp="1720433107353" name="All files">
-    <metrics statements="482" coveredstatements="105" conditionals="48" coveredconditionals="9" methods="110" coveredmethods="15" elements="640" coveredelements="129" complexity="0" loc="482" ncloc="482" packages="12" files="29" classes="29"/>
+<coverage generated="1720439107610" clover="3.2.0">
+  <project timestamp="1720439107610" name="All files">
+    <metrics statements="482" coveredstatements="110" conditionals="48" coveredconditionals="10" methods="110" coveredmethods="19" elements="640" coveredelements="139" complexity="0" loc="482" ncloc="482" packages="12" files="29" classes="29"/>
     <package name="src">
       <metrics statements="22" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="app.ts" path="/home/niranjana/backend/src/app.ts">
@@ -478,9 +478,9 @@
       </file>
     </package>
     <package name="src.service">
-      <metrics statements="90" coveredstatements="31" conditionals="11" coveredconditionals="0" methods="25" coveredmethods="10"/>
+      <metrics statements="90" coveredstatements="36" conditionals="11" coveredconditionals="1" methods="25" coveredmethods="14"/>
       <file name="department.service.ts" path="/home/niranjana/backend/src/service/department.service.ts">
-        <metrics statements="26" coveredstatements="11" conditionals="4" coveredconditionals="0" methods="12" coveredmethods="5"/>
+        <metrics statements="26" coveredstatements="14" conditionals="4" coveredconditionals="1" methods="12" coveredmethods="7"/>
         <line num="3" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
@@ -502,14 +502,14 @@
         <line num="36" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="46" count="0" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="45" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="1" type="stmt"/>
         <line num="49" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
       </file>
       <file name="employee.service.ts" path="/home/niranjana/backend/src/service/employee.service.ts">
-        <metrics statements="64" coveredstatements="20" conditionals="7" coveredconditionals="0" methods="13" coveredmethods="5"/>
+        <metrics statements="64" coveredstatements="22" conditionals="7" coveredconditionals="0" methods="13" coveredmethods="7"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -561,8 +561,8 @@
         <line num="83" count="0" type="stmt"/>
         <line num="84" count="0" type="stmt"/>
         <line num="87" count="1" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
         <line num="94" count="0" type="stmt"/>
         <line num="95" count="0" type="cond" truecount="0" falsecount="1"/>

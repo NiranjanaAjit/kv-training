@@ -37,14 +37,21 @@ describe('Department Service', () => {
         expect(mock).toHaveBeenCalledTimes(1);
     })
 
-    // it('should create a department', async() => {
-    //     const mock = jest.fn(departmentRepository.save).mockRejectedValue([]);
-    //     departmentRepository.save = mock;
+    it('should delete a department', async() => {
 
-    //     const departments = await departmentService.createDepartment({departmentDto: DepartmentDto});
+        const mock2 = jest.fn();
+        when(mock2).calledWith({id: 2})
+        .mockResolvedValue({id: 2,"departmentName": "sample","employees":[]} as Department);
+        departmentRepository.findOneBy = mock2;
+        const mock = jest.fn();
+        when(mock).calledWith({id:2,employees: []})
+        .mockResolvedValue([]);
+        departmentRepository.remove = mock;
 
-    //     expect(departments).toEqual([]);
-    //     expect(mock).toHaveBeenCalledTimes(1);
+        const result = await departmentService.deleteDepartment(2); 
 
-    // })
+        expect(result).toEqual(undefined);
+        expect(mock).toHaveBeenCalledTimes(1);
+
+    })
 })

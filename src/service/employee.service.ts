@@ -12,6 +12,7 @@ import DepartmentController from "../controller/department.controller";
 import DepartmentService from "./department.service";
 import DepartmentRepository from "../repository/department.repository";
 import AppDataSource from "../db/data-source.db";
+import exp from "constants";
 class EmployeeService {
   constructor(private employeeRepository: EmployeeRepository, private departmentRepository: DepartmentRepository) {}
 
@@ -32,6 +33,8 @@ class EmployeeService {
     newEmployee.email = employeeDto.email;
     newEmployee.age = employeeDto.age;
     newEmployee.name = employeeDto.name;
+    newEmployee.experience = employeeDto.experience;
+    newEmployee.status = employeeDto.status;
     const newAddress = new Address();
     newAddress.line1 = employeeDto.address.line1;
     newAddress.pincode = employeeDto.address.pincode;
@@ -69,7 +72,9 @@ class EmployeeService {
     name: string,
     age: number,
     address: any,
-    department: any
+    department: any,
+    status: string,
+    experience: number
   ): Promise<Employee> => {
     let employee = await this.employeeRepository.findOneBy({ id });
     if (employee == null) {
@@ -77,6 +82,8 @@ class EmployeeService {
     }
     employee.name = name;
     employee.email = email;
+    employee.status = status;
+    employee.experience = experience;
     employee.age = age;
     employee.address.line1 = address.line1;
     employee.address.pincode = address.pincode;

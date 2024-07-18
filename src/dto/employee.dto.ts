@@ -21,6 +21,13 @@ export class CreateEmployeeDto {
     @IsNumber()
     age: number;
 
+    @IsNotEmpty()
+    @IsNumber()
+    experience: number;
+
+    @IsNotEmpty()
+    @IsString()
+    status: string;
 
     @IsNotEmpty()
     @ValidateNested({each: true})

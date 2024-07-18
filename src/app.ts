@@ -7,11 +7,13 @@ import dataSource from "./db/data-source.db";
 import HttpException from "./exceptions/http.exceptions";
 import errorMiddleware from "./middleware/error.middleware";
 import departmentRouter from "./routes/department.router";
+import cors from 'cors';
 
 
 const server = express();
 server.use(bodyParser.json());
 server.use(loggerMiddleware);
+server.use(cors());
 server.use("/employees", employeeRouter);
 server.use("/departments",departmentRouter);
 server.use(errorMiddleware);

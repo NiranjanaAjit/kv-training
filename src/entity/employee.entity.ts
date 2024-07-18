@@ -23,6 +23,12 @@ export default class Employee extends AbstractEntity{
   @Column()
   age: number;
 
+  @Column()
+  experience: number;
+
+  @Column()
+  status: string;
+
   @OneToOne(() => Address, (address) => address.employee,{
     cascade: true,
     onDelete: "CASCADE"

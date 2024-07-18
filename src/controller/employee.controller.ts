@@ -127,7 +127,9 @@ class EmployeeController {
         employeeDto.name,
         employeeDto.age,
         employeeDto.address,
-        employeeDto.department
+        employeeDto.department,
+        employeeDto.status,
+        employeeDto.experience
       );
       response.status(201).send(employee);
     } catch (err) {
